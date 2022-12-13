@@ -404,9 +404,10 @@ TopViewControllerForViewController(UIViewController *viewController) {
           atSource:(CGRect)origin
           toResult:(FlutterResult)result
         withResult:(BOOL)withResult {
-  NSObject *data = [[SharePlusData alloc] initWithSubject:subject
-                                                     text:shareText];
-  [self share:@[ data ]
+    NSObject *data = [[SharePlusData alloc] initWithSubject:subject text:shareText];
+    NSURL *url = [NSURL URLWithString:shareText];
+    
+    [self share:(url && url.scheme && url.host) ? @[ url ] : @[ data ]
          withSubject:subject
       withController:controller
             atSource:origin
